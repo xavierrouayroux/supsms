@@ -47,7 +47,7 @@ public class RegisterServlet extends HttpServlet {
         userJpa.add(newUser);
         request.getSession().setAttribute("UtilisateurConnecte", newUser);
         } catch (Exception ex) { }
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/test.jsp");
+        RequestDispatcher dis = getServletContext().getRequestDispatcher("/login.jsp");
         dis.forward(request, response);
     }
 
