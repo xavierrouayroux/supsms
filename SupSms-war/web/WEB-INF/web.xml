@@ -25,6 +25,10 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>com.supsms.servlet.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConversationServlet</servlet-name>
+        <servlet-class>com.supsms.servlet.ConversationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -45,7 +49,10 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>ConversationServlet</servlet-name>
+        <url-pattern>/ConversationServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
