@@ -21,4 +21,5 @@ public interface UserDao {
     public void update (UserEntity objToUpdate);
     public UserEntity getOneByArrayOfParam(Map array);
     public void delete(UserEntity objToDelete);
+    public UserEntity getByLoginAndMdp(String login, String mdp);
 }

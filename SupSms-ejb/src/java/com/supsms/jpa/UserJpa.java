@@ -12,6 +12,7 @@ import com.supsms.entity.UserEntity;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,7 +22,9 @@ import javax.persistence.Query;
 /**
  *
  * @author xavierrouayroux
+ * 
  */
+@LocalBean
 @Stateless
 public class UserJpa implements UserDao{
     
@@ -41,6 +44,7 @@ public class UserJpa implements UserDao{
     public Collection<UserEntity> getAll() {
         return  em.createQuery("SELECT u FROM UserEntity u ").getResultList();
     }
+    
     
     @Override
     public void add(UserEntity objToAdd) {
@@ -87,5 +91,17 @@ public class UserJpa implements UserDao{
     public void delete(UserEntity objToDelete) {
         em.remove(objToDelete);
         em.flush();
+    }
+
+    @Override
+    public UserEntity getByLoginAndMdp(String login, String mdp) {
+        Query requete = em.createQuery("SELECT u FROM UserEntity u WHERE u.userName = :Login and u.password = :Mdp");
+        requete.setParameter("Login", login);
+        requete.setParameter("Mdp", mdp);
+        try {
+            UserEntity u = (UserEntity) requete.getSingleResult();
+            return u;
+        } catch (Exception e) { return null; }
+      
     }
 }
