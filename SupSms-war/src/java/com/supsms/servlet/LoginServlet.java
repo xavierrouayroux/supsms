@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String,String> m = new HashMap<>();
-        m.put("user_name", request.getParameter("login"));
+        m.put("userName", request.getParameter("login"));
         m.put("password", request.getParameter("mdp"));
         UserEntity u = uj.getOneByArrayOfParam(m);
         request.getSession().setAttribute("UtilisateurConnecte", u);
