@@ -12,9 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <form action="ConversationServlet" method="POST">
         <h1>Conversation Page !</h1>
         <textarea rows="20" cols="250"></textarea><br>
-        <input type="text" size="125">
-        <input type="button" value="Send">
+        <input type="text" name="msgSend" size="125">
+        <input type="submit" value="Send">
+        </form>
     </body>
 </html>
