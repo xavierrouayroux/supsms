@@ -4,9 +4,11 @@
     Author     : xavierrouayroux
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="com.supsms.entity.ContactEntity" %>
 <%@page  import="com.supsms.entity.UserEntity" %>
+<jsp:useBean id="contacts" class="com.supsms.entity.ContactEntity" scope="session"/>
 <% UserEntity u = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte"); %>
 <% if(u == null) { %> <% response.sendRedirect("login.jsp"); %> <% } %>
 
@@ -16,6 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/footer.css" rel="stylesheet">
+        <link href="css/login.css" rel="stylesheet">
         <title>Contact SupSMS</title>
     </head>
     <body>
@@ -33,20 +36,20 @@
                 </tr>
               </thead>
                 <tbody>
-                    <c:forEach var="contacts">
+                    <c:forEach var="contact" items="${contacts}">
                         <tr>
-                          <th><a href="/contact-edit/?id=${contacts.id}">${contacts.firstName}</a></th>
-                          <th>${contacts.lastName}</th>
-                          <th>${contacts.phoneNumber.number}</th>
-                          <th>${contacts.email}</th>
+                        <th><a href="ContactEditServlet?id=${contact.id}">${contact.firstName}</a></th>
+                          <th>${contact.firstName}</th>
+                          <th>${contact.phoneNumber.number}</th>
+                          <th>${contact.email}</th>
                         </tr>
                     </c:forEach>
 		</tbody>
             </table>
-        </div>     <!-- table respinsive-->
+        </div>     <!-- table responsive-->
         </br></br>
 
-        <form class="form" role="form" method="post" action="/Contact">
+        <form class="form-signin" role="form" method="post" action="ContactServlet">
             <h2 class="form-signin-heading">Create a new contact</h2>
              <input type="text" name="firstName" class="form-control" placeholder="first name" required >
              <input type="text" name="lastName" class="form-control" placeholder="last name" required >
@@ -58,9 +61,7 @@
              <input type="text" name="city" class="form-control" placeholder="city" >
              <input type="text" name="country" class="form-control" placeholder="country" >
             <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
-        </form>
-        
-        </div>
-    <jsp:include page="footer.jsp" />
+        </form> 
+   <jsp:include page="footer.jsp" />
     </body>
 </html>

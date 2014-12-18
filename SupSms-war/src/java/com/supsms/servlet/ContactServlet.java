@@ -6,19 +6,20 @@
 
 package com.supsms.servlet;
 
+import com.supsms.dao.AddressDao;
+import com.supsms.dao.ContactDao;
+import com.supsms.dao.PhoneNumberDao;
 import com.supsms.entity.AddressEntity;
 import com.supsms.entity.ContactEntity;
 import com.supsms.entity.PhoneNumberEntity;
 import com.supsms.entity.UserEntity;
-import com.supsms.jpa.AddressJpa;
-import com.supsms.jpa.ContactJpa;
-import com.supsms.jpa.PhoneNumberJpa;
 import com.supsms.jpa.UserJpa;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,16 +36,16 @@ import javax.servlet.http.HttpServletResponse;
 public class ContactServlet extends HttpServlet {
     
     @EJB
-    private ContactJpa contactJpa;
+    private ContactDao contactJpa;
     
     @EJB
     private UserJpa userJpa;
     
     @EJB
-    private PhoneNumberJpa phoneNumberJpa;
+    private PhoneNumberDao phoneNumberJpa;
     
     @EJB
-    private AddressJpa addressJpa;
+    private AddressDao addressJpa;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -58,26 +59,21 @@ public class ContactServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
             UserEntity currentUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
+            UserEntity refreshUser = userJpa.getById(currentUser.getId());
             if (currentUser == null) {
                 RequestDispatcher dis = getServletContext().getRequestDispatcher("/login.jsp");
                 dis.forward(request, response);
+            } else {
+                request.setAttribute("contacts", refreshUser.getContacts());
             }
-            Collection<ContactEntity> contactList;
-            contactList = contactJpa.getAll();
-            while (contactList.iterator().hasNext()) {
-              ContactEntity currentContact = contactList.iterator().next();
-              if (currentContact.getUser().getId() != currentUser.getId()) {
-                  contactList.remove(currentContact);
-              }
-            }
-            request.setAttribute("contacts", contactList);
         }
         catch (Exception ex) {
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
+        //response.sendRedirect(request.getContextPath() + "/contact.jsp");
         RequestDispatcher dis = getServletContext().getRequestDispatcher("/contact.jsp");
         dis.forward(request, response);
     }
@@ -108,15 +104,13 @@ public class ContactServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         ContactEntity newContact = new ContactEntity();
         UserEntity currentUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
         PhoneNumberEntity phoneNumber = new PhoneNumberEntity();
         AddressEntity address = new AddressEntity();
         
-        newContact.setFirstName(request.getParameter("firstName"));
-        newContact.setLastName(request.getParameter("lastName"));
-        newContact.setEmail(request.getParameter("email"));
-        newContact.setUser(currentUser);
+        phoneNumber.setNumber(request.getParameter("number"));
         
         address.setAddress1(request.getParameter("address1"));
         address.setAddress2(request.getParameter("address2"));
@@ -124,12 +118,16 @@ public class ContactServlet extends HttpServlet {
         address.setCity(request.getParameter("city"));
         address.setCountry(request.getParameter("country"));
         
-        phoneNumber.setNumber(request.getParameter("number"));
+        newContact.setFirstName(request.getParameter("firstName"));
+        newContact.setLastName(request.getParameter("lastName"));
+        newContact.setEmail(request.getParameter("email"));
+        newContact.setUser(currentUser);
+        newContact.setPhoneNumber(phoneNumber);
+        newContact.setAddress(address);
         
-        addressJpa.add(address);
-        phoneNumberJpa.add(phoneNumber);
-        contactJpa.add(newContact);
-        
+        currentUser.addContact(newContact);
+        userJpa.update(currentUser);
+       
         processRequest(request, response);
     }
 

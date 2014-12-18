@@ -6,6 +6,9 @@
 
 package com.supsms.servlet;
 
+import com.supsms.dao.AddressDao;
+import com.supsms.dao.ContactDao;
+import com.supsms.dao.PhoneNumberDao;
 import com.supsms.entity.AddressEntity;
 import com.supsms.entity.ContactEntity;
 import com.supsms.entity.PhoneNumberEntity;
@@ -32,16 +35,16 @@ import javax.servlet.http.HttpServletResponse;
 public class ContactEditServlet extends HttpServlet {
 
     @EJB
-    private ContactJpa contactJpa;
+    private ContactDao contactJpa;
     
     @EJB
     private UserJpa userJpa;
     
     @EJB
-    private PhoneNumberJpa phoneNumberJpa;
+    private PhoneNumberDao phoneNumberJpa;
     
     @EJB
-    private AddressJpa addressJpa;
+    private AddressDao addressJpa;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,21 +58,7 @@ public class ContactEditServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String stringcontactId = request.getParameter("id");
-            long contactId = new Long(stringcontactId);
-            ContactEntity currentContact = contactJpa.getById(contactId);
-            if (currentContact == null) {
-                RequestDispatcher dis = getServletContext().getRequestDispatcher("/contact.jsp");
-                dis.forward(request, response);
-            }
-            request.setAttribute("contact", currentContact);
-        }catch (Exception ex) {
-        ex.printStackTrace();
-        }
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/ContactEdit.jsp");
-        dis.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,6 +73,21 @@ public class ContactEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            /* TODO output your page here. You may use following sample code. */
+            String stringcontactId = request.getParameter("id");
+            long contactId = new Long(stringcontactId);
+            ContactEntity currentContact = contactJpa.getById(contactId);
+            if (currentContact == null) {
+                RequestDispatcher dis = getServletContext().getRequestDispatcher("/contact.jsp");
+                dis.forward(request, response);
+            }
+            request.setAttribute("contact", currentContact);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        RequestDispatcher dis = getServletContext().getRequestDispatcher("/ContactEdit.jsp");
+        dis.forward(request, response);
         processRequest(request, response);
     }
 
@@ -99,38 +103,44 @@ public class ContactEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String stringcontactId = request.getParameter("id");
-        long contactId = new Long(stringcontactId);
+        Long contactId = new Long(stringcontactId);
         ContactEntity newContact = contactJpa.getById(contactId);
-        UserEntity currentUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
-        PhoneNumberEntity phoneNumber = newContact.getPhoneNumber();
-        AddressEntity address = newContact.getAddress();
         
-        newContact.setFirstName(request.getParameter("firstName"));
-        newContact.setLastName(request.getParameter("lastName"));
-        newContact.setEmail(request.getParameter("email"));
-        newContact.setUser(currentUser);
+        if (!"".equals(request.getParameter("firstName"))) {
+            newContact.setFirstName(request.getParameter("firstName"));
+        }
+        if (!"".equals(request.getParameter("lastName"))) {
+            newContact.setLastName(request.getParameter("lastName"));
+        }
+        if (!"".equals(request.getParameter("email"))) {
+            newContact.setEmail(request.getParameter("email"));
+        }
         
-        address.setAddress1(request.getParameter("address1"));
-        address.setAddress2(request.getParameter("address2"));
-        address.setPostalCode(request.getParameter("postalCode"));
-        address.setCity(request.getParameter("city"));
-        address.setCountry(request.getParameter("country"));
+        if (!"".equals(request.getParameter("address1"))) {
+            newContact.getAddress().setAddress1(request.getParameter("address1"));
+        }
+        if (!"".equals(request.getParameter("address2"))) {
+            newContact.getAddress().setAddress2(request.getParameter("address2"));
+        }
+        if (!"".equals(request.getParameter("postalCode"))) {
+            newContact.getAddress().setPostalCode(request.getParameter("postalCode"));
+        }
+        if (!"".equals(request.getParameter("city"))) {
+            newContact.getAddress().setCity(request.getParameter("city"));
+        }
+        if (!"".equals(request.getParameter("country"))) {
+            newContact.getAddress().setCountry(request.getParameter("country"));
+        }
         
-        phoneNumber.setNumber(request.getParameter("number"));
+        if (!"".equals(request.getParameter("number"))) {
+            newContact.getPhoneNumber().setNumber(request.getParameter("number"));
+        }
         
-        addressJpa.update(address);
-        phoneNumberJpa.update(phoneNumber);
+        addressJpa.update(newContact.getAddress());
+        phoneNumberJpa.update(newContact.getPhoneNumber());
         contactJpa.update(newContact);
         
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-        }catch (Exception ex) {
-        ex.printStackTrace();
-        }
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/contact.jsp");
-        dis.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/ContactServlet");
     }
 
     /**

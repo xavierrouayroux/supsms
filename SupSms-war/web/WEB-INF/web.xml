@@ -41,6 +41,14 @@
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>com.supsms.servlet.AdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>com.supsms.servlet.ContactServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactEditServlet</servlet-name>
+        <servlet-class>com.supsms.servlet.ContactEditServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -76,6 +84,14 @@
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/AdminServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/ContactServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactEditServlet</servlet-name>
+        <url-pattern>/ContactEditServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
