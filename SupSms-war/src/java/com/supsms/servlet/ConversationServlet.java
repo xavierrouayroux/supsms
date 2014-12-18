@@ -5,9 +5,7 @@
  */
 package com.supsms.servlet;
 
-import com.supsms.message.MessageSender;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -59,10 +57,6 @@ public class ConversationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        MessageSender ms = new MessageSender();
-        ms.produceMessages(request.getParameter("msgSend"));
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/conversation.jsp");
-        dis.forward(request, response);
     }
 
     /**
