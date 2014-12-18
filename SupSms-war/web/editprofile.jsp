@@ -26,7 +26,7 @@
                 <input class="form-control" type="text" name="first_name" placeholder="${UtilisateurConnecte.firstName}"/>
                 <input class="form-control" type="text" name="last_name" placeholder="${UtilisateurConnecte.lastName}"/>
                 <input class="form-control" type="password" name="pwd" placeholder="New password"/>
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Confirm change" />
+                <input class="btn btn-lg btn-success btn-block" type="submit" value="Confirm change" />
             </form>
         </div>
     <jsp:include page="footer.jsp" />

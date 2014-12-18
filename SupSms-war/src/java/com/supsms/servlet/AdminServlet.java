@@ -38,7 +38,7 @@ public class AdminServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
         Collection<UserEntity> cue = userJpa.getAll();
-        request.setAttribute("usersList", cue);
+        request.setAttribute("UsersList", cue);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -4,9 +4,9 @@
     Author     : fabien
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="com.supsms.entity.UserEntity" %>
-<jsp:useBean id="usersList" class="com.supsms.entity.UserEntity" scope="session"/>
 <% UserEntity u = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte"); %>
 <% if(u == null) { %> <% response.sendRedirect("login.jsp"); %> <% } %>
 <!DOCTYPE html>
@@ -17,14 +17,14 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/footer.css" rel="stylesheet">
         <link href="css/login.css" rel="stylesheet">
-        <title>Main SupSMS</title>
+        <title>Administration SupSMS</title>
     </head>
     <body>
         <jsp:include page="menu.jsp" />
         <div class="container col-lg-10 col-lg-offset-1">
             <h2 class="sub-header">Users administration</h2>
              <div class="table-responsive">
-            <table class="table table-striped" id="tableUser">
+            <table class="table table-striped">
                <thead>
                 <tr class="info" >
                   <th>Username</th>
@@ -32,10 +32,10 @@
                 </tr>
               </thead>
                 <tbody>
-                    <c:forEach var="user" items="${usersList}">
+                    <c:forEach var="usrlist" items="${requestScope['UsersList']}">
                         <tr>
-                            <th class="col-lg-5">${user.userName}</th>
-                            <th class="col-lg-5">${user.email}</th>
+                            <th class="col-lg-5">${usrlist.userName}</th>
+                            <th class="col-lg-5">${usrlist.email}</th>
                             <th><input value="Delete" class="btn btn-danger btn-xs"></th>
                         </tr>
                     </c:forEach>

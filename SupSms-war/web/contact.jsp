@@ -8,7 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="com.supsms.entity.ContactEntity" %>
 <%@page  import="com.supsms.entity.UserEntity" %>
-<jsp:useBean id="contacts" class="com.supsms.entity.ContactEntity" scope="session"/>
 <% UserEntity u = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte"); %>
 <% if(u == null) { %> <% response.sendRedirect("login.jsp"); %> <% } %>
 
@@ -51,7 +50,7 @@
                 </tr>
               </thead>
                 <tbody>
-                    <c:forEach var="contact" items="${contacts}">
+                    <c:forEach var="contact" items="${requestScope['contacts']}">
                         <tr>
                             <th class="col-lg-3"><a href="ContactEditServlet?id=${contact.id}" >${contact.firstName}</a></th>
                             <th class="col-lg-3">${contact.lastName}</th>
