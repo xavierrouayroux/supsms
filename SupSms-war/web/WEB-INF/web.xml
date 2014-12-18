@@ -48,6 +48,8 @@
     <servlet>
         <servlet-name>ContactEditServlet</servlet-name>
         <servlet-class>com.supsms.servlet.ContactEditServlet</servlet-class>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>com.supsms.servlet.MainServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
@@ -86,12 +88,8 @@
         <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ContactServlet</servlet-name>
-        <url-pattern>/ContactServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ContactEditServlet</servlet-name>
-        <url-pattern>/ContactEditServlet</url-pattern>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/main</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
