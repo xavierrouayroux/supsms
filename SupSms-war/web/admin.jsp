@@ -21,28 +21,27 @@
     </head>
     <body>
         <jsp:include page="menu.jsp" />
-        <div class="container">
+        <div class="container col-lg-10 col-lg-offset-1">
             <h2 class="sub-header">Users administration</h2>
              <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" id="tableUser">
                <thead>
                 <tr class="info" >
                   <th>Username</th>
                   <th>Mail</th>
-                  <th>Delete</th>
                 </tr>
               </thead>
                 <tbody>
                     <c:forEach var="user" items="${usersList}">
                         <tr>
-                            <th>${user.userName}</th>
-                            <th>${user.email}</th>
-                            <th><a href="${user.id}">X</a></th>
+                            <th class="col-lg-5">${user.userName}</th>
+                            <th class="col-lg-5">${user.email}</th>
+                            <th><input value="Delete" class="btn btn-danger btn-xs"></th>
                         </tr>
                     </c:forEach>
 		</tbody>
             </table>
-        </div>     <!-- table respinsive-->
+        </div>     <!-- table responsive-->
         </div>
     <jsp:include page="footer.jsp" />
     </body>

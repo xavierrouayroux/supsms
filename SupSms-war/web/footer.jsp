@@ -6,11 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!-- FOOTER -->
-     <div id="footer">
-      <div class="container">
-        <p class="text-muted">&copy; 2014 SupSMS, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-      </div>
+<div class="navbar-wrapper">
+    <div id="footer">
+        <div class="navbar navbar-fixed-bottom navbar-inverse">
+            <div class="container">
+              <p class="text-muted">&copy; 2014 SupSMS, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+            </div>
+        </div>
     </div>
+</div>
 
 
     <!-- Bootstrap core JavaScript

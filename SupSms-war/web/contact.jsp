@@ -23,7 +23,22 @@
     </head>
     <body>
         <jsp:include page="menu.jsp" />
-        <div class="container">
+        <div class="container col-lg-3 col-lg-offset-1">
+            <form class="form-signin" role="form" method="post" action="ContactServlet">
+                <h2 class="form-signin-heading">Create a new contact</h2>
+                 <input type="text" name="firstName" class="form-control" placeholder="first name" required >
+                 <input type="text" name="lastName" class="form-control" placeholder="last name" required >
+                 <input type="text" name="email" class="form-control" placeholder="email" required >
+                 <input type="text" name="number" class="form-control" placeholder="phone number" required >
+                 <input type="text" name="address1" class="form-control" placeholder="address" >
+                 <input type="text" name="address2" class="form-control" placeholder="address2" >
+                 <input type="text" name="postalCode" class="form-control" placeholder="postal code" >
+                 <input type="text" name="city" class="form-control" placeholder="city" >
+                 <input type="text" name="country" class="form-control" placeholder="country" >
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+            </form> 
+        </div>
+        <div class="container col-lg-7">
              <h2 class="sub-header">MANAGE YOUR CONTACTS</h2>
              <div class="table-responsive">
             <table class="table table-striped">
@@ -38,30 +53,18 @@
                 <tbody>
                     <c:forEach var="contact" items="${contacts}">
                         <tr>
-                        <th><a href="ContactEditServlet?id=${contact.id}">${contact.firstName}</a></th>
-                          <th>${contact.lastName}</th>
-                          <th>${contact.phoneNumber.number}</th>
-                          <th>${contact.email}</th>
+                            <th class="col-lg-3"><a href="ContactEditServlet?id=${contact.id}" >${contact.firstName}</a></th>
+                            <th class="col-lg-3">${contact.lastName}</th>
+                            <th class="col-lg-3">${contact.phoneNumber.number}</th>
+                            <th class="col-lg-3">${contact.email}</th>
+                            <th><input value="Delete" class="btn btn-danger btn-xs"></th>
                         </tr>
                     </c:forEach>
 		</tbody>
             </table>
-        </div>     <!-- table responsive-->
-        </br></br>
+        </div>
 
-        <form class="form-signin" role="form" method="post" action="ContactServlet">
-            <h2 class="form-signin-heading">Create a new contact</h2>
-             <input type="text" name="firstName" class="form-control" placeholder="first name" required >
-             <input type="text" name="lastName" class="form-control" placeholder="last name" required >
-             <input type="text" name="email" class="form-control" placeholder="email" required >
-             <input type="text" name="number" class="form-control" placeholder="phone number" required >
-             <input type="text" name="address1" class="form-control" placeholder="address" >
-             <input type="text" name="address2" class="form-control" placeholder="address2" >
-             <input type="text" name="postalCode" class="form-control" placeholder="postal code" >
-             <input type="text" name="city" class="form-control" placeholder="city" >
-             <input type="text" name="country" class="form-control" placeholder="country" >
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
-        </form> 
+        
    <jsp:include page="footer.jsp" />
     </body>
 </html>
