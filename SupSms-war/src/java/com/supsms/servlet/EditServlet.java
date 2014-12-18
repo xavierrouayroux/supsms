@@ -36,36 +36,7 @@ public class EditServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            //Récupère l'utilisateur connecté
-            UserEntity updateUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
-
-            //Modifie seulement les valeurs qui ont été renseignés
-            if (!"".equals(request.getParameter("first_name"))) {
-                updateUser.setFirstName(request.getParameter("first_name"));
-            }
-            if (!"".equals(request.getParameter("last_name"))) {
-                updateUser.setLastName(request.getParameter("last_name"));
-            }
-            if (!"".equals(request.getParameter("pwd"))) {
-                updateUser.setPassword(request.getParameter("pwd"));
-            }
-            if (!"".equals(request.getParameter("mail"))) {
-                updateUser.setEmail(request.getParameter("mail"));
-            }
-            
-            //Met à jour l'utilisateur
-            userJpa.update(updateUser);
-            
-            //Met à jour la variable de session
-            request.getSession().setAttribute("UtilisateurConnecte", updateUser);
-            
-            //Réactualise la page
-            RequestDispatcher dis = getServletContext().getRequestDispatcher("/EditProfile");
-            dis.forward(request, response);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        response.sendRedirect(request.getContextPath() + "/EditProfile");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -94,7 +65,35 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            //Récupère l'utilisateur connecté
+            UserEntity updateUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
+
+            //Modifie seulement les valeurs qui ont été renseignés
+            if (!"".equals(request.getParameter("first_name"))) {
+                updateUser.setFirstName(request.getParameter("first_name"));
+            }
+            if (!"".equals(request.getParameter("last_name"))) {
+                updateUser.setLastName(request.getParameter("last_name"));
+            }
+            if (!"".equals(request.getParameter("pwd"))) {
+                updateUser.setPassword(request.getParameter("pwd"));
+            }
+            if (!"".equals(request.getParameter("mail"))) {
+                updateUser.setEmail(request.getParameter("mail"));
+            }
+            
+            //Met à jour l'utilisateur
+            userJpa.update(updateUser);
+            
+            //Met à jour la variable de session
+            request.getSession().setAttribute("UtilisateurConnecte", updateUser);
+            
+            //Réactualise la page
+            response.sendRedirect(request.getContextPath() + "/EditProfile");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
