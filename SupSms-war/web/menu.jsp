@@ -26,15 +26,17 @@
                 <li ><a href="index.jsp">Home</a></li>
               
                 <li><a href="offer.jsp">Offer</a></li>
-                <li><a href="login.jsp">Log in</a></li>
-                <li><a href="register.jsp">Register</a></li>
                 <%
                   if (u != null) {
                       out.print("<li><a href=\"EditServlet\">Profile</a></li>");
                       out.print("<li><a href=\"ContactServlet\">Contacts</a></li>");
                       if (u.isIsAdmin() == true) {
                           out.print("<li><a href=\"AdminServlet\">Admin</a></li>");
-                      }
+                      } 
+                      out.print("<li><a href=\"LogoutServlet\">Sign Out</a></li>");
+                  } else {
+                          out.print("<li><a href=\"login.jsp\">Sign In</a></li>");
+                          out.print("<li><a href=\"register.jsp\">Sign Up</a></li>");
                   }
                 %>
                 <li><a href="#contact">About</a></li>

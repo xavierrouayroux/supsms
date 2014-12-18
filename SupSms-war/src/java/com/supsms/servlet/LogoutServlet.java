@@ -5,12 +5,8 @@
  */
 package com.supsms.servlet;
 
-import com.supsms.entity.UserEntity;
-import com.supsms.jpa.UserJpa;
 import java.io.IOException;
-import java.util.Collection;
-import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabien
  */
-public class AdminServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
-    @EJB
-    UserJpa userJpa;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,13 +31,11 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-        Collection<UserEntity> cue = userJpa.getAll();
-        request.setAttribute("usersList", cue);
+            request.getSession().setAttribute("UtilisateurConnecte", null);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/admin.jsp");
-        dis.forward(request, response);
+        response.sendRedirect("index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

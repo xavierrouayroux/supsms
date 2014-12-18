@@ -39,7 +39,7 @@
                     <c:forEach var="contact" items="${contacts}">
                         <tr>
                         <th><a href="ContactEditServlet?id=${contact.id}">${contact.firstName}</a></th>
-                          <th>${contact.firstName}</th>
+                          <th>${contact.lastName}</th>
                           <th>${contact.phoneNumber.number}</th>
                           <th>${contact.email}</th>
                         </tr>

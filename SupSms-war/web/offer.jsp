@@ -12,11 +12,12 @@
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/footer.css" rel="stylesheet">
+        <link href="css/login.css" rel="stylesheet">
         <title>Offer SupSMS</title>
     </head>
     <body>
     <jsp:include page="menu.jsp" />
-        <div class="col-md-12">
+        <div class="col-md-10 col-md-offset-1">
             <div class="jumbotron text-center">
                 <h2>NEW OFFER</h2>
                 <p>Only for 10€ by month</p>
