@@ -5,14 +5,8 @@
  */
 package com.supsms.servlet;
 
-
-import com.supsms.entity.UserEntity;
-import com.supsms.jpa.UserJpa;
 import java.io.IOException;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.naming.InitialContext;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,11 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabien
  */
-@Stateless
-public class RegisterServlet extends HttpServlet {
-    @EJB
-    private UserJpa userJpa;
-    
+public class AdminServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,27 +29,19 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String info = request.getParameter("username");
-        try {
-            UserEntity newUser = new UserEntity();
-            newUser.setUserName(request.getParameter("username"));
-            newUser.setFirstName(request.getParameter("first_name"));
-            newUser.setLastName(request.getParameter("last_name"));
-            newUser.setPassword(request.getParameter("pwd"));
-            newUser.setEmail(request.getParameter("mail"));
-            newUser.setIsAdmin(Boolean.FALSE);
-            
-            userJpa.add(newUser);
-            //info = newUser.toString();
-            request.getSession().setAttribute("UtilisateurConnecte", newUser);
-        } catch (Exception ex) { //info = ex.toString();
-            ex.printStackTrace();
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AdminServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        //String message = "You can now log in to SupSMS !";
-        //request.setAttribute("message", message);
-        request.setAttribute("message", info);
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/login.jsp");
-        dis.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

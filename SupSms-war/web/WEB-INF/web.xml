@@ -29,6 +29,18 @@
         <servlet-name>ConversationServlet</servlet-name>
         <servlet-class>com.supsms.servlet.ConversationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>editprofile</servlet-name>
+        <jsp-file>editprofile.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServlet</servlet-name>
+        <servlet-class>com.supsms.servlet.EditServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.supsms.servlet.AdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -52,6 +64,18 @@
     <servlet-mapping>
         <servlet-name>ConversationServlet</servlet-name>
         <url-pattern>/ConversationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editprofile</servlet-name>
+        <url-pattern>/EditProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServlet</servlet-name>
+        <url-pattern>/EditServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

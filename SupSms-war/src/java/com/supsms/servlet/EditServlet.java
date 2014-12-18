@@ -5,12 +5,11 @@
  */
 package com.supsms.servlet;
 
-
 import com.supsms.entity.UserEntity;
 import com.supsms.jpa.UserJpa;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,12 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabien
  */
-@Stateless
-public class RegisterServlet extends HttpServlet {
-    @EJB
-    private UserJpa userJpa;
-    
+public class EditServlet extends HttpServlet {
 
+    @EJB
+    UserJpa userJpa;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,27 +36,36 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String info = request.getParameter("username");
         try {
-            UserEntity newUser = new UserEntity();
-            newUser.setUserName(request.getParameter("username"));
-            newUser.setFirstName(request.getParameter("first_name"));
-            newUser.setLastName(request.getParameter("last_name"));
-            newUser.setPassword(request.getParameter("pwd"));
-            newUser.setEmail(request.getParameter("mail"));
-            newUser.setIsAdmin(Boolean.FALSE);
+            //Récupère l'utilisateur connecté
+            UserEntity updateUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
+
+            //Modifie seulement les valeurs qui ont été renseignés
+            if (!"".equals(request.getParameter("first_name"))) {
+                updateUser.setFirstName(request.getParameter("first_name"));
+            }
+            if (!"".equals(request.getParameter("last_name"))) {
+                updateUser.setLastName(request.getParameter("last_name"));
+            }
+            if (!"".equals(request.getParameter("pwd"))) {
+                updateUser.setPassword(request.getParameter("pwd"));
+            }
+            if (!"".equals(request.getParameter("mail"))) {
+                updateUser.setEmail(request.getParameter("mail"));
+            }
             
-            userJpa.add(newUser);
-            //info = newUser.toString();
-            request.getSession().setAttribute("UtilisateurConnecte", newUser);
-        } catch (Exception ex) { //info = ex.toString();
+            //Met à jour l'utilisateur
+            userJpa.update(updateUser);
+            
+            //Met à jour la variable de session
+            request.getSession().setAttribute("UtilisateurConnecte", updateUser);
+            
+            //Réactualise la page
+            RequestDispatcher dis = getServletContext().getRequestDispatcher("/EditProfile");
+            dis.forward(request, response);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        //String message = "You can now log in to SupSMS !";
-        //request.setAttribute("message", message);
-        request.setAttribute("message", info);
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/login.jsp");
-        dis.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
