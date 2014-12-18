@@ -40,6 +40,10 @@ public class ConversationEntity implements Serializable {
     @Temporal(TIMESTAMP)
     private Date createdAt;
     
+    @Column(name="last_sms")
+    @Temporal(TIMESTAMP)
+    private Date lastSms;
+    
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
@@ -89,6 +93,14 @@ public class ConversationEntity implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getLastSms() {
+        return lastSms;
+    }
+
+    public void setLastSms(Date lastSms) {
+        this.lastSms = lastSms;
     }
 
    

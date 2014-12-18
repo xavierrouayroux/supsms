@@ -7,6 +7,7 @@
 package com.supsms.dao;
 
 import com.supsms.entity.ConversationEntity;
+import com.supsms.entity.UserEntity;
 import java.util.Collection;
 import java.util.Map;
 
@@ -21,5 +22,6 @@ public interface ConversationDao {
     public void update (ConversationEntity objToUpdate);
     public ConversationEntity getOneByArrayOfParam(Map array);
     public void delete(ConversationEntity objToDelete);
+    public Collection<ConversationEntity> getAllForAnUserOrderByDate(UserEntity user);
 }
 

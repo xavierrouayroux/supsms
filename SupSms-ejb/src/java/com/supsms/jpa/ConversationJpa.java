@@ -8,6 +8,7 @@ package com.supsms.jpa;
 
 import com.supsms.dao.ConversationDao;
 import com.supsms.entity.ConversationEntity;
+import com.supsms.entity.UserEntity;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -86,6 +87,11 @@ public class ConversationJpa implements ConversationDao{
     public void delete(ConversationEntity objToDelete) {
         em.remove(objToDelete);
         em.flush();
+    }
+    
+    @Override
+    public Collection<ConversationEntity> getAllForAnUserOrderByDate(UserEntity user){
+        return  em.createQuery("SELECT u FROM ConversationEntity u WHERE u.user=:user ORDER BY u.lastSms").setParameter("user", user).getResultList();
     }
 }
 
