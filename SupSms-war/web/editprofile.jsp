@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="com.supsms.entity.UserEntity" %>
-<% UserEntity u = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte"); %>
+<jsp:useBean id="UtilisateurConnecte" class="com.supsms.entity.UserEntity" scope="session"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,10 +21,10 @@
         <div class="container">
             <form class="form-signin" role="form" action="EditServlet" method="POST">
                 <h2 class="form-signin-heading">Edit profile</h2>
-                <input class="form-control" type="text" name="username" placeholder="<%= u.getUserName()%>" value="" readonly="yes"/>
-                <input class="form-control" type="email" name="mail" placeholder="<%= u.getEmail() %>"/>
-                <input class="form-control" type="text" name="first_name" placeholder="<%= u.getFirstName() %>"/>
-                <input class="form-control" type="text" name="last_name" placeholder="<%= u.getLastName() %>"/>
+                <input class="form-control" type="text" name="username" placeholder="${UtilisateurConnecte.userName}" value="" readonly="yes"/>
+                <input class="form-control" type="email" name="mail" placeholder="${UtilisateurConnecte.email}"/>
+                <input class="form-control" type="text" name="first_name" placeholder="${UtilisateurConnecte.firstName}"/>
+                <input class="form-control" type="text" name="last_name" placeholder="${UtilisateurConnecte.lastName}"/>
                 <input class="form-control" type="password" name="pwd" placeholder="New password"/>
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="Confirm change" />
             </form>
