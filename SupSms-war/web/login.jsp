@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page  import="com.supsms.entity.UserEntity" %>
+<% UserEntity u = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte"); %>
+<% if(u != null) { %> <% response.sendRedirect("main.jsp"); %> <% } %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,10 +20,14 @@
     <body>
         <jsp:include page="menu.jsp" />
          <div class="container">
+             <c:if test="${not empty message}">
+                <p> ${message}</p>
+             </c:if>
+             
             <form class="form-signin" role="form" action="ProcessSignIn" method="POST">
                 <h2 class="form-signin-heading">Enter your information</h2>
                 <p class="form-signin-heading">New user ? <a href="register.jsp">Sign in</a></p>
-                <input type="Text" name="login" class="form-control"  required autofocus />
+                <input type="Text" name="login" class="form-control" placeholder="user name"  required autofocus />
                 <input type="password" name="mdp" class="form-control" placeholder="Password" required/>
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="LOG IN" />
             </form>

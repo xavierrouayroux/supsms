@@ -5,12 +5,13 @@
  */
 package com.supsms.servlet;
 
-import com.supsms.dao.UserDao;
+
 import com.supsms.entity.UserEntity;
 import com.supsms.jpa.UserJpa;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.naming.InitialContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +22,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabien
  */
+@Stateless
 public class RegisterServlet extends HttpServlet {
     @EJB
     private UserJpa userJpa;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,6 +39,7 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         String info = request.getParameter("username");
         try {
         UserEntity newUser = new UserEntity();
         newUser.setUserName(request.getParameter("username"));
@@ -44,9 +48,19 @@ public class RegisterServlet extends HttpServlet {
         newUser.setPassword(request.getParameter("pwd"));
         newUser.setEmail(request.getParameter("mail"));
         newUser.setIsAdmin(Boolean.FALSE);
-        userJpa.add(newUser);
+        //userJpa = new UserJpa();
+        UserJpa test=(UserJpa)new   
+        InitialContext().lookup(UserJpa.class.getName());
+        test.add(newUser);
+        info = test.toString();
+        //info = newUser.toString();
         request.getSession().setAttribute("UtilisateurConnecte", newUser);
-        } catch (Exception ex) { }
+        } catch (Exception ex) { //info = ex.toString();
+        ex.printStackTrace();
+        }
+        //String message = "You can now log in to SupSMS !";
+        //request.setAttribute("message", message);
+        request.setAttribute("message", info);
         RequestDispatcher dis = getServletContext().getRequestDispatcher("/login.jsp");
         dis.forward(request, response);
     }
