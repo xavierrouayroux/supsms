@@ -84,14 +84,14 @@ public class ConversationJpa implements ConversationDao{
     }
     
     @Override
-    public void delete(ConversationEntity objToDelete) {
-        em.remove(objToDelete);
+    public void delete(Long objToDeleteId) {
+        em.remove(em.find(ConversationEntity.class, objToDeleteId));
         em.flush();
     }
     
     @Override
     public Collection<ConversationEntity> getAllForAnUserOrderByDate(UserEntity user){
-        return  em.createQuery("SELECT u FROM ConversationEntity u WHERE u.user=:user ORDER BY u.lastSms").setParameter("user", user).getResultList();
+        return  em.createQuery("SELECT u FROM ConversationEntity u WHERE u.user=:user ORDER BY u.lastSms DESC, u.createdAt DESC").setParameter("user", user).getResultList();
     }
 }
 

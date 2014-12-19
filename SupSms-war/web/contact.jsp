@@ -25,16 +25,16 @@
         <div class="container col-lg-3 col-lg-offset-1">
             <form class="form-signin" role="form" method="post" action="ContactServlet">
                 <h2 class="form-signin-heading">Create a new contact</h2>
-                 <input type="text" name="firstName" class="form-control" placeholder="first name" required >
-                 <input type="text" name="lastName" class="form-control" placeholder="last name" required >
-                 <input type="text" name="email" class="form-control" placeholder="email" required >
-                 <input type="text" name="number" class="form-control" placeholder="phone number" required >
-                 <input type="text" name="address1" class="form-control" placeholder="address" >
-                 <input type="text" name="address2" class="form-control" placeholder="address2" >
-                 <input type="text" name="postalCode" class="form-control" placeholder="postal code" >
-                 <input type="text" name="city" class="form-control" placeholder="city" >
-                 <input type="text" name="country" class="form-control" placeholder="country" >
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+                 <input type="text" name="firstName" class="form-control" placeholder="First Name" required >
+                 <input type="text" name="lastName" class="form-control" placeholder="Last Name" required >
+                 <input type="text" name="email" class="form-control" placeholder="Mail" required >
+                 <input type="text" name="number" class="form-control" placeholder="Phone Number" required >
+                 <input type="text" name="address1" class="form-control" placeholder="Address" >
+                 <input type="text" name="address2" class="form-control" placeholder="Address 2" >
+                 <input type="text" name="postalCode" class="form-control" placeholder="Zip Code" >
+                 <input type="text" name="city" class="form-control" placeholder="City" >
+                 <input type="text" name="country" class="form-control" placeholder="Country" >
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
             </form> 
         </div>
         <div class="container col-lg-7">
@@ -52,11 +52,12 @@
                 <tbody>
                     <c:forEach var="contact" items="${requestScope['contacts']}">
                         <tr>
-                            <th class="col-lg-3"><a href="ContactEditServlet?id=${contact.id}" >${contact.firstName}</a></th>
-                            <th class="col-lg-3">${contact.lastName}</th>
-                            <th class="col-lg-3">${contact.phoneNumber.number}</th>
-                            <th class="col-lg-3">${contact.email}</th>
-                            <th><input value="Delete" class="btn btn-danger btn-xs"></th>
+                            <th class="col-lg-4">${contact.firstName}</th>
+                            <th class="col-lg-4">${contact.lastName}</th>
+                            <th class="col-lg-4">${contact.phoneNumber.number}</th>
+                            <th class="col-lg-4">${contact.email}</th>
+                            <th class="col-lg-1"><a href="ContactEditServlet?id=${contact.id}" ><input value="Details" class="btn btn-info btn-xs"></a></th>
+                            <th class="col-lg-1"><input value="Delete" class="btn btn-danger btn-xs"></th>
                         </tr>
                     </c:forEach>
 		</tbody>

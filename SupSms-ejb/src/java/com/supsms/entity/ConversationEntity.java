@@ -49,7 +49,10 @@ public class ConversationEntity implements Serializable {
     private UserEntity user;
     
     @OneToMany(mappedBy = "conversation")
-    private Collection <SmsEntity> smss;
+    private Collection <SmsEntity> sms;
+    
+    @Column(name = "phone_number", nullable = true)
+    private String phoneNumber;
     
     @OneToOne
     @JoinColumn(name = "contact_id", nullable = true)
@@ -61,14 +64,6 @@ public class ConversationEntity implements Serializable {
     
     public ContactEntity getContact() {
         return contact;
-    }
-    
-    public Collection <SmsEntity> getSmss() {
-        return smss;
-    }
-    
-    public void addSmss(SmsEntity newSms) {
-        smss.add(newSms);
     }
     
     public void setUser (UserEntity newUser) {
@@ -103,6 +98,23 @@ public class ConversationEntity implements Serializable {
         this.lastSms = lastSms;
     }
 
+    public Collection<SmsEntity> getSms() {
+        return sms;
+    }
+
+    public void setSms(Collection<SmsEntity> sms) {
+        this.sms = sms;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    
    
 
     @Override

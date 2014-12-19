@@ -21,7 +21,7 @@ public interface ConversationDao {
     public void add(ConversationEntity ObjAdd);
     public void update (ConversationEntity objToUpdate);
     public ConversationEntity getOneByArrayOfParam(Map array);
-    public void delete(ConversationEntity objToDelete);
+    public void delete(Long objToDeleteId);
     public Collection<ConversationEntity> getAllForAnUserOrderByDate(UserEntity user);
 }
 

@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="com.supsms.entity.UserEntity" %>
 <% UserEntity u = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte"); %>
-<% if(u != null) { %> <% response.sendRedirect("main.jsp"); %> <% } %>
+<% if(u != null) { %> <% response.sendRedirect("main"); %> <% } %>
 <!DOCTYPE html>
 <html>
     <head>

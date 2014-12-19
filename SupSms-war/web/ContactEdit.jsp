@@ -34,7 +34,14 @@
                  <input type="text" name="postalCode" class="form-control" placeholder="${contact.address.postalCode}" >
                  <input type="text" name="city" class="form-control" placeholder="${contact.address.city}" >
                  <input type="text" name="country" class="form-control" placeholder="${contact.address.country}" >
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm change</button>
+                 <div class="btn-group btn-group-lg btn-group-justified" role="group">
+                    <div class="btn-group">
+                        <button class="btn btn-primary " type="submit">Confirm change</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-danger" onclick="ContactServlet">Abort</button>
+                    </div>
+                 </div>
             </form>
         </div>
     <jsp:include page="footer.jsp" />

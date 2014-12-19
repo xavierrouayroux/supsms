@@ -6,15 +6,18 @@
 
 package com.supsms.servlet;
 
+import com.sun.xml.ws.security.impl.policy.Constants;
+import com.supsms.dao.ContactDao;
+import com.supsms.dao.ConversationDao;
+import com.supsms.dao.SmsDao;
 import com.supsms.entity.ContactEntity;
 import com.supsms.entity.ConversationEntity;
 import com.supsms.entity.UserEntity;
-import com.supsms.jpa.ContactJpa;
-import com.supsms.jpa.ConversationJpa;
-import com.supsms.jpa.SmsJpa;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Time;
 import java.util.Collection;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,13 +31,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MainServlet extends HttpServlet {
     @EJB
-    private ContactJpa contactJpa;
+    private ContactDao contactJpa;
     
     @EJB
-    private ConversationJpa conversationJpa;
+    private ConversationDao conversationJpa;
     
     @EJB
-    private SmsJpa smsJpa;
+    private SmsDao smsJpa;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,18 +51,20 @@ public class MainServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
             UserEntity currentUser = (UserEntity)request.getSession().getAttribute("UtilisateurConnecte");
             if (currentUser == null) {
                 RequestDispatcher dis = getServletContext().getRequestDispatcher("/login.jsp");
                 dis.forward(request, response);
+            } else {
+                request.setAttribute("contacts", currentUser.getContacts());
             }
             Collection<ConversationEntity> conversList;
             conversList = conversationJpa.getAllForAnUserOrderByDate(currentUser);
             request.setAttribute("conversations", conversList);
         }catch (Exception ex) {
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
         RequestDispatcher dis = getServletContext().getRequestDispatcher("/main.jsp");
         dis.forward(request, response);
@@ -77,6 +82,10 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getParameter("id") != null) {
+            Long conversationId = new Long(request.getParameter("id"));
+            conversationJpa.delete(conversationId);
+        }
         processRequest(request, response);
     }
 
@@ -91,6 +100,21 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ConversationEntity ce = new ConversationEntity();
+        String test = request.getParameter("contactSelect");
+        String phone = request.getParameter("phone");
+        if ("none".equals(request.getParameter("contactSelect")) || !"".equals(request.getParameter("phone"))) {
+            ce.setPhoneNumber(request.getParameter("phone"));
+            ce.setContact(null);
+        } else {
+            Long idContact = new Long(request.getParameter("contactSelect"));
+            ContactEntity contact = contactJpa.getById(idContact);
+            ce.setContact(contact);
+            ce.setPhoneNumber(null);
+        }
+        ce.setUser((UserEntity)request.getSession().getAttribute("UtilisateurConnecte"));
+        ce.setCreatedAt(new Date());
+        conversationJpa.add(ce);
         processRequest(request, response);
     }
 

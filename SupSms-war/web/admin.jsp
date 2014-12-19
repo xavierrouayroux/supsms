@@ -36,6 +36,7 @@
                         <tr>
                             <th class="col-lg-5">${usrlist.userName}</th>
                             <th class="col-lg-5">${usrlist.email}</th>
+                            <th><input value="Invoice(s)" class="btn btn-info btn-xs"></th>
                             <th><input value="Delete" class="btn btn-danger btn-xs"></th>
                         </tr>
                     </c:forEach>

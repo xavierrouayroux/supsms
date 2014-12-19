@@ -4,6 +4,7 @@
     Author     : xavierrouayroux
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page  import="com.supsms.entity.UserEntity" %>
 <jsp:useBean id="UtilisateurConnecte" class="com.supsms.entity.UserEntity" scope="session"/>
@@ -28,23 +29,37 @@
             <table class="table table-striped">
                <thead>
                 <tr class="info" >
-                  <th>last sms</th>
-                  <th>phone number</th>
-                  <th>contact name</th>
+                  <th>Last Sms</th>
+                  <th>Contact Name</th>
+                  <th>Phone Number</th>
                 </tr>
               </thead>
                 <tbody>
-                    <c:forEach var="conversations">
+                    <c:forEach var="conversation" items="${requestScope['conversations']}">
                         <tr>
-                          <th>${conversations.lastSms}</th>
-                          <th>${conversations.sms.iterator().next().numberSend}</th>
-                          <th>${conversations.contact.firstName}</th>
+                            <th class="col-lg-3">${conversation.lastSms}</th>
+                            <th class="col-lg-3">${conversation.contact.firstName.concat(" ").concat(conversation.contact.lastName)}</th>
+                            <th class="col-lg-3">${conversation.contact.phoneNumber.number}</th>
+                            <th><input class="btn btn-info btn-xs" value="See"></th>
+                            <th><a href="main?id=${conversation.id}"><input class="btn btn-danger btn-xs" value="Delete"></a></th>  
                         </tr>
                     </c:forEach>
 		</tbody>
             </table>
         </div>     <!-- table respinsive-->
-        <input class="btn btn-block btn-primary btn-lg" value="New conversation">
+        
+        <div class="container">
+            <form class="form-signin" role="form" method="post" action="main">
+                <select name="contactSelect" class="form-control">
+                    <option selected="true" value="none">Contact(s) list</option>
+                    <c:forEach var="contact" items="${requestScope['contacts']}">
+                        <option value="${contact.id}">${contact.firstName.concat(" ").concat(contact.lastName)}</option>
+                    </c:forEach>
+                </select>
+                <input type="tel" class="form-control" placeholder="or Phone Number" name="phone">
+                <input class="btn btn-block btn-primary btn-lg" value="New conversation" type="submit">
+            </form>
+        </div>
         </div>
     <jsp:include page="footer.jsp" />
     </body>
