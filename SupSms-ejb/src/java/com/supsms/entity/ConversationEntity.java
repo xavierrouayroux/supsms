@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -48,7 +49,7 @@ public class ConversationEntity implements Serializable {
     @JoinColumn(name = "user_id", nullable = true)
     private UserEntity user;
     
-    @OneToMany(mappedBy = "conversation")
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
     private Collection <SmsEntity> sms;
     
     @Column(name = "phone_number", nullable = true)
@@ -104,6 +105,10 @@ public class ConversationEntity implements Serializable {
 
     public void setSms(Collection<SmsEntity> sms) {
         this.sms = sms;
+    }
+    
+    public void addSms(SmsEntity newSms) {
+        this.sms.add(newSms);
     }
 
     public String getPhoneNumber() {

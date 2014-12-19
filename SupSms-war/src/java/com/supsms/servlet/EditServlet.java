@@ -82,6 +82,9 @@ public class EditServlet extends HttpServlet {
             if (!"".equals(request.getParameter("mail"))) {
                 updateUser.setEmail(request.getParameter("mail"));
             }
+            if (!"".equals(request.getParameter("phone"))) {
+                updateUser.getPhoneNumber().setNumber(request.getParameter("phone"));
+            }
             
             //Met à jour l'utilisateur
             userJpa.update(updateUser);

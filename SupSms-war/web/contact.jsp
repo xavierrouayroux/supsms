@@ -43,8 +43,7 @@
             <table class="table table-striped">
                <thead>
                 <tr class="info" >
-                  <th>First name</th>
-                  <th>Last name</th>
+                  <th>Name</th>
                   <th>Phone number</th>
                   <th>Email</th>
                 </tr>
@@ -52,12 +51,11 @@
                 <tbody>
                     <c:forEach var="contact" items="${requestScope['contacts']}">
                         <tr>
-                            <th class="col-lg-4">${contact.firstName}</th>
-                            <th class="col-lg-4">${contact.lastName}</th>
+                            <th class="col-lg-4">${contact.firstName} ${contact.lastName}</th>
                             <th class="col-lg-4">${contact.phoneNumber.number}</th>
                             <th class="col-lg-4">${contact.email}</th>
                             <th class="col-lg-1"><a href="ContactEditServlet?id=${contact.id}" ><input value="Details" class="btn btn-info btn-xs"></a></th>
-                            <th class="col-lg-1"><input value="Delete" class="btn btn-danger btn-xs"></th>
+                            <th class="col-lg-1"><input onclick="" value="Delete" class="btn btn-danger btn-xs"></th>
                         </tr>
                     </c:forEach>
 		</tbody>

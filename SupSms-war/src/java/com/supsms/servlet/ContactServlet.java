@@ -63,6 +63,7 @@ public class ContactServlet extends HttpServlet {
                 dis.forward(request, response);
             } else {
                 request.setAttribute("contacts", refreshUser.getContacts());
+                request.setAttribute("UtilisateurConnecte", refreshUser);
             }
         }
         catch (Exception ex) {
@@ -106,12 +107,13 @@ public class ContactServlet extends HttpServlet {
         AddressEntity address = new AddressEntity();
         
         phoneNumber.setNumber(request.getParameter("number"));
-        
+    
         address.setAddress1(request.getParameter("address1"));
         address.setAddress2(request.getParameter("address2"));
         address.setPostalCode(request.getParameter("postalCode"));
         address.setCity(request.getParameter("city"));
         address.setCountry(request.getParameter("country"));
+        
         
         newContact.setFirstName(request.getParameter("firstName"));
         newContact.setLastName(request.getParameter("lastName"));
@@ -122,7 +124,6 @@ public class ContactServlet extends HttpServlet {
         
         currentUser.addContact(newContact);
         userJpa.update(currentUser);
-       
         processRequest(request, response);
     }
 

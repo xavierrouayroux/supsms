@@ -33,18 +33,6 @@ public class PhoneNumberEntity implements Serializable {
     
     @Column(name="number")
     private String number;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable=true)
-    private UserEntity user;
-    
-    public UserEntity getUser() {
-        return user;
-    }
-    
-    public void setUser(UserEntity newUser) {
-        user = newUser;
-    }
 
     public Long getId() {
         return id;

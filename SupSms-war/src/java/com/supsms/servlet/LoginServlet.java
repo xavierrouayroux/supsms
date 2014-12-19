@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
         m.put("password", request.getParameter("mdp"));
         UserEntity u = uj.getOneByArrayOfParam(m);
         request.getSession().setAttribute("UtilisateurConnecte", u);
-        RequestDispatcher dis = getServletContext().getRequestDispatcher("/main.jsp");
+        RequestDispatcher dis = getServletContext().getRequestDispatcher("/main");
         dis.forward(request, response);
     }
 

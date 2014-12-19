@@ -6,9 +6,13 @@
 package com.supsms.servlet;
 
 
+import com.supsms.dao.PhoneNumberDao;
+import com.supsms.entity.ContactEntity;
+import com.supsms.entity.PhoneNumberEntity;
 import com.supsms.entity.UserEntity;
 import com.supsms.jpa.UserJpa;
 import java.io.IOException;
+import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.naming.InitialContext;
@@ -26,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterServlet extends HttpServlet {
     @EJB
     private UserJpa userJpa;
+    @EJB
+    private PhoneNumberDao phoneNumberJpa;
     
 
     /**
@@ -48,6 +54,12 @@ public class RegisterServlet extends HttpServlet {
             newUser.setPassword(request.getParameter("pwd"));
             newUser.setEmail(request.getParameter("mail"));
             newUser.setIsAdmin(Boolean.FALSE);
+            
+            PhoneNumberEntity pne = new PhoneNumberEntity();
+            pne.setNumber(request.getParameter("phone"));
+            
+            phoneNumberJpa.add(pne);
+            newUser.setPhoneNumber(pne);
             
             userJpa.add(newUser);
             //info = newUser.toString();

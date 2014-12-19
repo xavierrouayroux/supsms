@@ -82,10 +82,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("id") != null) {
-            Long conversationId = new Long(request.getParameter("id"));
-            conversationJpa.delete(conversationId);
-        }
         processRequest(request, response);
     }
 
@@ -100,8 +96,12 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String see = request.getParameter("see");
+        String newConversation = request.getParameter("newC");
+        String delete = request.getParameter("delete");
+        
+        if (newConversation != null) {
         ConversationEntity ce = new ConversationEntity();
-        String test = request.getParameter("contactSelect");
         String phone = request.getParameter("phone");
         if ("none".equals(request.getParameter("contactSelect")) || !"".equals(request.getParameter("phone"))) {
             ce.setPhoneNumber(request.getParameter("phone"));
@@ -115,6 +115,17 @@ public class MainServlet extends HttpServlet {
         ce.setUser((UserEntity)request.getSession().getAttribute("UtilisateurConnecte"));
         ce.setCreatedAt(new Date());
         conversationJpa.add(ce);
+        } else if (see != null) {
+            String stringConversId = request.getParameter("idConvers");
+            Long conversationId = new Long(stringConversId);
+            request.getSession().setAttribute("conversation", conversationJpa.getById(conversationId));
+            RequestDispatcher dis = getServletContext().getRequestDispatcher("/ConversationServlet");
+            dis.forward(request, response);
+        } else if (delete != null) {
+            String stringConversId = request.getParameter("idConvers");
+            Long conversationId = new Long(stringConversId);
+            conversationJpa.delete(conversationId);
+        }
         processRequest(request, response);
     }
 

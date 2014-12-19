@@ -37,11 +37,14 @@
                 <tbody>
                     <c:forEach var="conversation" items="${requestScope['conversations']}">
                         <tr>
-                            <th class="col-lg-3">${conversation.lastSms}</th>
-                            <th class="col-lg-3">${conversation.contact.firstName.concat(" ").concat(conversation.contact.lastName)}</th>
-                            <th class="col-lg-3">${conversation.contact.phoneNumber.number}</th>
-                            <th><input class="btn btn-info btn-xs" value="See"></th>
-                            <th><a href="main?id=${conversation.id}"><input class="btn btn-danger btn-xs" value="Delete"></a></th>  
+                            <form action="main" method="post">
+                                <input name="idConvers" hidden="true" value="${conversation.id}">
+                                <th class="col-lg-3">${conversation.lastSms}</th>
+                                <th class="col-lg-3">${conversation.contact.firstName.concat(" ").concat(conversation.contact.lastName)}</th>
+                                <th class="col-lg-3">${conversation.contact.phoneNumber.number}${conversation.phoneNumber}</th>
+                                <th><input class="btn btn-info btn-xs btn-block" value="See" name="see" type="submit"></th>
+                                <th><input class="btn btn-danger btn-xs btn-block" name="delete" type="submit" value="Delete"></th>  
+                            </form>
                         </tr>
                     </c:forEach>
 		</tbody>
@@ -57,7 +60,7 @@
                     </c:forEach>
                 </select>
                 <input type="tel" class="form-control" placeholder="or Phone Number" name="phone">
-                <input class="btn btn-block btn-primary btn-lg" value="New conversation" type="submit">
+                <input class="btn btn-block btn-primary btn-lg" value="New conversation" name="newC" type="submit">
             </form>
         </div>
         </div>

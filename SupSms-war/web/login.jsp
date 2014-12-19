@@ -26,10 +26,10 @@
              
             <form class="form-signin" role="form" action="ProcessSignIn" method="POST">
                 <h2 class="form-signin-heading">Enter your information</h2>
-                <p class="form-signin-heading">New user ? <a href="register.jsp">Sign in</a></p>
-                <input type="Text" name="login" class="form-control" placeholder="user name"  required autofocus />
+                <p class="form-signin-heading">New user ? <a href="register.jsp">Sign Up</a></p>
+                <input type="Text" name="login" class="form-control" placeholder="UserName"  required autofocus />
                 <input type="password" name="mdp" class="form-control" placeholder="Password" required/>
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="LOG IN" />
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign In" />
             </form>
          </div>
     <jsp:include page="footer.jsp" />

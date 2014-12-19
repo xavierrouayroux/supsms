@@ -14,8 +14,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -50,10 +54,11 @@ public class UserEntity implements Serializable {
     @Column(name="is_admin")
     private Boolean isAdmin;
     
-    @OneToMany(mappedBy="user")
-    private Collection <PhoneNumberEntity> phoneNumbers;
+    @OneToOne
+    @JoinColumn(name = "phone_number_id", nullable = false)
+    private PhoneNumberEntity phoneNumber;
     
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
     private Collection <ContactEntity> contacts;
     
     @OneToMany(mappedBy = "user")
@@ -73,14 +78,6 @@ public class UserEntity implements Serializable {
     
     public void addContact(ContactEntity newContact) {
         contacts.add(newContact);
-    }
-    
-    public Collection <PhoneNumberEntity> getPhoneNumbers(){
-        return phoneNumbers;
-    }
-    
-    public void addPhoneNumber(PhoneNumberEntity number) {
-        phoneNumbers.add(number);
     }
 
     public Long getId() {
@@ -144,6 +141,14 @@ public class UserEntity implements Serializable {
 
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    public PhoneNumberEntity getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(PhoneNumberEntity phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     

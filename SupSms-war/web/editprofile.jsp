@@ -22,6 +22,7 @@
             <form class="form-signin" role="form" action="EditServlet" method="POST">
                 <h2 class="form-signin-heading">Edit profile</h2>
                 <input class="form-control" type="text" name="username" placeholder="${UtilisateurConnecte.userName}" value="" readonly="yes"/>
+                <input class="form-control" type="tel" name="phone" placeholder="${UtilisateurConnecte.phoneNumber.number}" value=""/>
                 <input class="form-control" type="email" name="mail" placeholder="${UtilisateurConnecte.email}"/>
                 <input class="form-control" type="text" name="first_name" placeholder="${UtilisateurConnecte.firstName}"/>
                 <input class="form-control" type="text" name="last_name" placeholder="${UtilisateurConnecte.lastName}"/>
